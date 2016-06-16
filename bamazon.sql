@@ -36,3 +36,20 @@ INSERT INTO products (itemID, productName, departmentName, price, stockQuantity)
 INSERT INTO products (itemID, productName, departmentName, price, stockQuantity) VALUES (10, "yarn", "Crafts", 5, 29);
 -- lets you see everything in the products table
 SELECT * FROM products;
+
+CREATE TABLE departments (
+departmentID INTEGER(10),
+departmentName VARCHAR(30),
+overHeadCosts DECIMAL(10, 2),
+totalSales DECIMAL(10, 2)
+);
+
+INSERT INTO departments (departmentID, departmentName, overHeadCosts, totalSales) VALUES (1, "Crafts", 1000, 2000);
+
+INSERT INTO departments (departmentID, departmentName, overHeadCosts, totalSales) VALUES (2, "Food", 3000, 17000.50);
+
+INSERT INTO departments (departmentID, departmentName, overHeadCosts, totalSales) VALUES (3, "Clothing", 2000, 12000);
+
+INSERT INTO departments (departmentID, departmentName, overHeadCosts, totalSales) VALUES (4, "Electronics", 2500, 20000);
+
+SELECT * FROM departments;
