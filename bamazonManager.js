@@ -130,6 +130,35 @@ function addInventory() {
 
 function newProduct() {
 
-	
+	inquirer.prompt([{
+		type: "input",
+		message: "What product do you want to add to the products table?",
+		name: "pName"
+	}, {
+		type: "input",
+		message: "What department will it be a part of?",
+		name: "dName"
+	}, {
+		type: "input",
+		message: "What is the price of the product?",
+		name: "price"
+	}, {
+		type: "input",
+		message: "How many of the product to you want to add to stock?",
+		name: "stock"
+	}]).then(function(answers) {
+
+		var productName = answers.pName;
+		var departmentName = answers.dName;
+		var price = answers.price;
+		var stockQuantity = answers.stock;
+
+		connection.query('INSERT INTO products (productName, departmentName, price, stockQuantity) VALUES (?, ?, ?, ?)', [productName, departmentName, price, stockQuantity], function(err, data) {
+
+			console.log(data);
+
+		}); // end of query insert new product
+
+	}); // end of prompt add new product
 
 }; // end of newProduct function
