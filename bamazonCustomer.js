@@ -44,7 +44,7 @@ connection.query('SELECT * FROM products', function(err, data) {
 		}]).then(function (answers) {
 
 			//Check that the store has enough to sell the user, if not respond to user "Insufficient quanitity" and prevent the order from going through
-			var idOfItem = answers.id
+			var idOfItem = answers.id;
 
 			connection.query('SELECT * FROM products WHERE ?', {itemID: idOfItem}, function(err, data) {
 				if (err) throw err;

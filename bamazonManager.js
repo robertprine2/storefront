@@ -71,6 +71,8 @@ function lowInventory() {
 
 			else {
 
+				// this wouldn't be viable on large inventories, but it shows that it loops through the whole inventory
+
 				console.log("There is/are plenty of " + data[i].productName + "(s) left!");
 
 			} // end of else quantity < 5
@@ -85,7 +87,42 @@ function lowInventory() {
 
 function addInventory() {
 
+	inquirer.prompt([
+		{
+		type: "input",
+		message: "What is the itemID of the product you would like to add inventory to?",
+		name: "id"
+	}, {
+		type: "input",
+		message: "How many more of the product would you like to add to inventory?",
+		name: "amount"
+	}]).then(function(answers) {
 
+		var idOfItem = answers.id;
+		var increaseInventory = parseInt(answers.amount);
+
+
+		connection.query('SELECT * FROM products WHERE ?', {
+			itemID: idOfItem}, function(err, data) {
+				if (err) throw err;
+
+				var item = data[0];
+
+				var newInventoryAmount = increaseInventory + item.stockQuantity;
+
+				connection.query('UPDATE products SET ? WHERE ?', [{
+					stockQuantity: newInventoryAmount
+					}, {
+					itemID: idOfItem
+				}], function(err, data) {
+
+					console.log('There are now ' + newInventoryAmount + ' ' + item.productName + '(s) in inventory.');
+
+				}); // end of query update products
+
+		}); // end of query SELECT FROM Products
+
+	}); // end of inquirer prompt how many more?
 
 }; // end of addInventory function
 
