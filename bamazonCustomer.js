@@ -21,7 +21,7 @@ connection.connect(function(err) {
 
 connection.query('SELECT * FROM products', function(err, data) {
 	if (err) throw err;
-	console.log(data);
+	console.log(data); 
 
 	// prompt user to ask them the ID of the product they would like to buy
 
@@ -49,18 +49,25 @@ connection.query('SELECT * FROM products', function(err, data) {
 				var item = data[0];
 
 				console.log(answers.amount);
-				console.log(item);
+				console.log(item.stockQuantity);
 
 				if (answers.amount < item.stockQuantity) {
 
 					// If the store does have enough show the user the total cost of their purchase, update SQL to reflect the remaining quantity
+					var amountLeft = item.stockQuantity - answers.amount;
 
-					connection.query('UPDATE products SET stockQuantity = ' + answers.amount + ' WHERE stockQuantity = ' + (item.stockQuantity - answers.amount), function(err, data1) {
+					console.log(amountLeft);
+
+					connection.query('UPDATE products SET ? WHERE ?', [{
+						stockQuantity: amountLeft
+						}, {
+							itemID: idOfItem
+						}], function(err, data) {
 						if (err) throw err;
 						
-						console.log(data1);
+						console.log(data);
 
-					}); // end of query answers
+					}); // end of query answers function
 
 				} // end of if amount is purchaseable
 
@@ -69,13 +76,28 @@ connection.query('SELECT * FROM products', function(err, data) {
 					console.log("Insufficient quantity.");
 
 				} // end of else you can't buy this
+
+				// put total cost into totalSales column for the related department
+
+				var sale = answers.amount * item.price;
+
+				connection.query('SELECT * FROM departments WHERE ?', {departmentName: item.departmentName}, function(err, data) {
+				if (err) throw err;
+
+				var total = sale + data[0].totalSales;
+
+				connection.query('UPDATE departments SET ? WHERE ?', [{
+						totalSales: total
+						}, {
+							departmentName: item.departmentName
+						}], function(err, data) {
+						if (err) throw err;
+						
+						console.log(data);
+
+					}); // end of query answers function
+
+				}); // end of query for select department 
 			}); // end of query answers
 	}); // end of prompt user
 }); // end of connection function
-
-
-
-
-
-// put total cost into totalSales column for the related department
-
