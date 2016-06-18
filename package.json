@@ -1,0 +1,24 @@
+{
+  "name": "storefront",
+  "version": "1.0.0",
+  "description": "Bamazon is a storefront that allows users to purchase, add inventory, etc...",
+  "main": "bamazonCustomer.js",
+  "dependencies": {
+    "inquirer": "^1.0.3",
+    "mysql": "^2.11.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertprine2/storefront.git"
+  },
+  "author": "Robert Prine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robertprine2/storefront/issues"
+  },
+  "homepage": "https://github.com/robertprine2/storefront#readme"
+}

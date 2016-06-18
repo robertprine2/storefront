@@ -130,6 +130,6 @@ function addInventory() {
 
 function newProduct() {
 
-
+	
 
 }; // end of newProduct function
