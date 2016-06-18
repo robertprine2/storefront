@@ -20,7 +20,7 @@ inquirer.prompt({
 
 	// switch for different options
 
-	switch(action) {
+	switch(answer.choice) {
 		case 'View Products for Sale': 
 			productsForSale();
 			break;
@@ -41,7 +41,14 @@ inquirer.prompt({
 
 function productsForSale() {
 
+	connection.query('SELECT * FROM products', function(err, data) {
+		if (err) throw err;
 
+		console.log('Products for sale: '); 
+
+		console.log(data);
+
+	}); // end of query select * from products
 
 }; // end of productsForSale function
 
@@ -49,7 +56,28 @@ function productsForSale() {
 
 function lowInventory() {
 
+	connection.query('SELECT * FROM products', function(err, data) {
+		if (err) throw err;
 
+		for (i = 0; i < data.length; i++) {
+
+			if (data[i].stockQuantity < 5) {
+
+				// log the number of the low quantity item left
+
+				console.log("There is/are only " + data[i].stockQuantity + " " + data[i].productName + "(s) left!");
+
+			} // end if quantity < 5
+
+			else {
+
+				console.log("There is/are plenty of " + data[i].productName + "(s) left!");
+
+			} // end of else quantity < 5
+
+		} // end of for loop through data
+
+	}); // end of query select * from products
 
 }; // end of lowInventory function
 
