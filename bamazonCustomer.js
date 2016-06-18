@@ -21,7 +21,10 @@ connection.connect(function(err) {
 
 connection.query('SELECT * FROM products', function(err, data) {
 	if (err) throw err;
-	console.log(data); 
+
+	console.log('Products for sale: '); 
+
+	console.log(data);
 
 	// prompt user to ask them the ID of the product they would like to buy
 
@@ -48,15 +51,12 @@ connection.query('SELECT * FROM products', function(err, data) {
 				
 				var item = data[0];
 
-				console.log(answers.amount);
-				console.log(item.stockQuantity);
-
 				if (answers.amount < item.stockQuantity) {
 
 					// If the store does have enough show the user the total cost of their purchase, update SQL to reflect the remaining quantity
 					var amountLeft = item.stockQuantity - answers.amount;
 
-					console.log(amountLeft);
+					var sale = answers.amount * item.price;
 
 					connection.query('UPDATE products SET ? WHERE ?', [{
 						stockQuantity: amountLeft
@@ -65,7 +65,9 @@ connection.query('SELECT * FROM products', function(err, data) {
 						}], function(err, data) {
 						if (err) throw err;
 						
-						console.log(data);
+						console.log('The total for your purchase is $' + sale + '.');
+
+						console.log('Number of ' + item.productName + '(s) left: ' + amountLeft);
 
 					}); // end of query answers function
 
@@ -79,8 +81,6 @@ connection.query('SELECT * FROM products', function(err, data) {
 
 				// put total cost into totalSales column for the related department
 
-				var sale = answers.amount * item.price;
-
 				connection.query('SELECT * FROM departments WHERE ?', {departmentName: item.departmentName}, function(err, data) {
 				if (err) throw err;
 
@@ -93,7 +93,7 @@ connection.query('SELECT * FROM products', function(err, data) {
 						}], function(err, data) {
 						if (err) throw err;
 						
-						console.log(data);
+						console.log(item.departmentName + "'s total sales are: $" + total);
 
 					}); // end of query answers function
 
