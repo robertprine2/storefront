@@ -44,7 +44,7 @@ function departmentSales() {
 
 		var table = new Table({
 			head: ['Department ID', 'Department Name', 'Overhead Costs', 'Total Sales', 'Total Profit'],
-				colWidths: [100, 200]
+				colWidths: [20, 20, 20, 20, 20]
 		}); // end newTable
 
 		
@@ -52,7 +52,7 @@ function departmentSales() {
 		for (i = 0; i < data.length; i++) {
 
 			table.push(
-				[data[i].departmentID, data[i].departmentName, data[i].overHeadCosts, data[i].totalSales]
+				[data[i].departmentID, data[i].departmentName, data[i].overHeadCosts, data[i].totalSales, (data[i].totalSales - data[i].overHeadCosts)]
 			); // end table.push
 
 		} // end of for loop
