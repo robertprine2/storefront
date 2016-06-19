@@ -155,7 +155,7 @@ function newProduct() {
 
 		connection.query('INSERT INTO products (productName, departmentName, price, stockQuantity) VALUES (?, ?, ?, ?)', [productName, departmentName, price, stockQuantity], function(err, data) {
 
-			console.log(data);
+			console.log('You have added a new product: ' + productName + '.');
 
 		}); // end of query insert new product
 

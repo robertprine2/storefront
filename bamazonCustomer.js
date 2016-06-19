@@ -69,7 +69,7 @@ connection.query('SELECT * FROM products', function(err, data) {
 
 						console.log('Number of ' + item.productName + '(s) left: ' + amountLeft);
 
-					}); // end of query answers function
+					}); // end of query update products
 
 				} // end of if amount is purchaseable
 
